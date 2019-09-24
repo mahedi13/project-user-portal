@@ -1,0 +1,62 @@
+<?php
+session_start();
+include("includes/DatabaseConfig.php");
+include("includes/Functions.php");
+$fname='';$msg='';
+if(isset($_COOKIE['cookieMail']))
+{
+$userEmail=$_COOKIE['cookieMail'];
+$result=mysqli_query($con,"SELECT first_name,last_name FROM users WHERE email='$userEmail'");
+$retrive=mysqli_fetch_array($result);
+$fname=$retrive['first_name'];
+$msg="Logout";
+}
+else if(isset($_SESSION['mail']))
+{
+$userEmail=$_SESSION['mail'];
+$result=mysqli_query($con,"SELECT first_name,last_name FROM users WHERE email='$userEmail'");
+$retrive=mysqli_fetch_array($result);
+$fname=$retrive['first_name'];
+$msg="Logout";
+}
+?>
+<html>
+<head>
+<link href ='css/bootstrap.css' rel='stylesheet' type='text/css'>
+<title>Home page</title>
+</head>
+<style type="text/css">
+#body-bg
+{
+  background: url("image/background.jpg")
+  center no-repeat fixed;
+}
+.error
+{
+  color:red;
+}
+.Success
+{
+    color:green;
+    font-weight: bold;
+}
+#space
+{
+  margin-right:50px;
+}
+</style>
+<body id ='body-bg'>
+  <div class='jumbotron' style ='margin-top:0px; padding-top:20px; padding-bottom:20px'>
+    <h2 align='center'>Welcome to Bit Mascot User Portal</h2>
+    <hr>
+  <a href='profile.php'><button class="btn btn-outline-success" style='margin-right:20px'><b><font color='black'>User Profile</font></b></button></a>
+  <a href='Login.php'><button class="btn btn-outline-success" style='margin-right:20px'><b><font color='black'>User Login</font></b></button></a>
+  <a href='Signup.php'><button class="btn btn-outline-success" style='margin-right:20px'><b><font color='black'>User Registration</font></b></button></a>
+<a href='admin.php'><button class="btn btn-outline-success" style='margin-top:0px'><b><font color='black'>Admin Login</font></b></button></a>
+<a href='Logout.php' style='float:right; margin-top:0px'><u><b><font color='black'><?php echo $msg;?> <?php echo $fname;?></font></b></u></a>
+</div>
+
+
+
+</body>
+</html>
